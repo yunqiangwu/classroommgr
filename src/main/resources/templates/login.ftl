@@ -111,9 +111,9 @@
                     //注意：如果不是ajax方式提交表单，传入callback，这时data参数是当前表单对象，回调函数会在表单验证全部通过后执行，然后判断是否提交表单，如果callback里明确return false，则表单不会提交，如果return true或没有return，则会提交表单。
                     var objtip = $(".stu_error_box");
                     if (data.success) {
-                        objtip.text(data.message + "\n两秒后跳转到首页！");
+                        objtip.text(data.message + "\n两秒后跳转到登录前的页面！");
                         setTimeout(function () {
-                            location.href = "/";
+                            location.href = $('#returnUrl').val();
                         }, 2000);
                     } else {
                         objtip.text(data.message || '信息验证错误' + "\n请重新登录！");
@@ -178,9 +178,9 @@
                     //注意：如果不是ajax方式提交表单，传入callback，这时data参数是当前表单对象，回调函数会在表单验证全部通过后执行，然后判断是否提交表单，如果callback里明确return false，则表单不会提交，如果return true或没有return，则会提交表单。
                     var objtip = $(".tea_error_box");
                     if (data.success) {
-                        objtip.text(data.message + "\n两秒后跳转到首页！");
+                        objtip.text(data.message + "\n两秒后跳转到登录前的页面！");
                         setTimeout(function () {
-                            location.href = "/";
+                            location.href = $('#returnUrl').val();
                         }, 2000);
                     } else {
                         objtip.text(data.message || '信息验证错误' + "\n请重新登录！");
@@ -245,9 +245,9 @@
                     //注意：如果不是ajax方式提交表单，传入callback，这时data参数是当前表单对象，回调函数会在表单验证全部通过后执行，然后判断是否提交表单，如果callback里明确return false，则表单不会提交，如果return true或没有return，则会提交表单。
                     var objtip = $(".sec_error_box");
                     if (data.success) {
-                        objtip.text(data.message + "\n两秒后跳转到首页！");
+                        objtip.text(data.message + "\n两秒后跳转到登录前的页面！");
                         setTimeout(function () {
-                            location.href = "/";
+                            location.href = $('#returnUrl').val();
                         }, 2000);
                     } else {
                         objtip.text(data.message || '信息验证错误' + "\n请重新登录！");
@@ -415,6 +415,8 @@
         <li><a href="javascript:;"><img src="${request.contextPath}/static/images/2.jpg"></a></li>
     </ul>
 </div>
+
+<input type="hidden" id="returnUrl" name="returnUrl" value="${returnUrl}"/>
 </body>
 </html>
 

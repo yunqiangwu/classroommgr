@@ -39,6 +39,11 @@ public class LoginController {
     public ModelAndView login(HttpServletRequest request,
             HttpServletResponse response) {
 			ModelAndView result = new ModelAndView("login");
+		Object ru = request.getSession().getAttribute("ru");
+		if(ru == null || "".equals(ru)){
+			ru = "/";
+		}
+		result.addObject("returnUrl", ru);
 			result.addObject("enableCaptcha",captchaIsEnable);
 		return result;
     }

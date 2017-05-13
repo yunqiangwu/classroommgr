@@ -23,7 +23,11 @@ public class Application extends WebMvcConfigurerAdapter {
     }
 
     @RequestMapping({"/"})
-    String home() {
+    String index() {
         return "index";
+    }
+    @RequestMapping({"/get-csrf"})
+    String home() {
+        return "csrf_debug";
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import tk.mybatis.springboot.conf.CaptchaConfig;
 
+import javax.servlet.Filter;
 import javax.servlet.http.HttpServletRequest;
 
 @Configuration
@@ -26,24 +27,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
     @Autowired
     private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
+    @Autowired
+    private MyAuthenticationEntryPoint myAuthenticationEntryPoint;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+
+        http.exceptionHandling().authenticationEntryPoint(myAuthenticationEntryPoint);
+        http.rememberMe().rememberMeParameter("remember").tokenValiditySeconds(9000);
         http
-            .authorizeRequests()
-                .antMatchers( "/home","/static/**","/captcha/getcaptcha").permitAll()
+                .authorizeRequests()
+                .antMatchers("/favicon.ico", "/get-csrf", "/static/**", "/captcha/getcaptcha").permitAll()
                 .anyRequest().authenticated()
                 .and()
-            .formLogin()
-                .loginPage("/login")
+                .formLogin()
+//                .loginPage("/login")
                 .successHandler(myAuthenticationSuccessHandler)
                 .failureHandler(myAuthenticationFailureHandler)
                 .authenticationDetailsSource(authenticationDetailsSource)
                 .permitAll()
                 .and()
-            .logout()
+                .logout()
                 .permitAll();
-
-
         http.csrf().disable();
     }
 
@@ -54,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //    private UserDetailsService userDetailsService;//自定义用户服务
 
     @Autowired
-    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception{
+    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
     }
 
     @Autowired
@@ -66,14 +72,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        auth.auth
         auth.authenticationProvider(provider);
     }
-
-
-
-
-
-
-
-
 
 
 }
