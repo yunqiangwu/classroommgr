@@ -23,13 +23,23 @@ public class MyAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint
 
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        String returnUrl = buildHttpReturnUrlForRequest(httpServletRequest);
-        httpServletRequest.getSession().setAttribute("ru", returnUrl);
-        super.commence(httpServletRequest,httpServletResponse,e);
+
+        if(httpServletRequest.getMethod().equals("POST")){
+            httpServletResponse.setStatus(401);
+            //返回json形式的错误信息
+            httpServletResponse.setCharacterEncoding("UTF-8");
+            httpServletResponse.setContentType("application/json");
+
+            httpServletResponse.getWriter().println("{\"ok\":0,\"msg\":\""+e.getLocalizedMessage()+"\"}");
+            httpServletResponse.getWriter().flush();
+        }else {
+            String returnUrl = buildHttpReturnUrlForRequest(httpServletRequest);
+            httpServletRequest.getSession().setAttribute("ru", returnUrl);
+//            httpServletRequest.get
+//            httpServletRequest.getSession().setAttribute("");
+            super.commence(httpServletRequest,httpServletResponse,e);
+        }
     }
-
-
-
 
     protected String buildHttpReturnUrlForRequest(HttpServletRequest request)
             throws IOException, ServletException {

@@ -24,6 +24,10 @@
 
 package tk.mybatis.springboot.model;
 
+import tk.mybatis.mapper.entity.Example;
+
+import javax.persistence.Transient;
+
 /**
  * 用户信息
  *
@@ -35,6 +39,64 @@ public class UserInfo extends BaseEntity {
     private String password;
     private String usertype;
     private Integer enabled;
+
+//    public Object getOredCriteria() {
+//        return oredCriteria;
+//    }
+//
+//    public void setOredCriteria(Object oredCriteria) {
+//        this.oredCriteria = oredCriteria;
+//    }
+//    @Transient
+//    private Object oredCriteria = new Example.Criteria();
+//
+//    public Object getDistinct() {
+//        return distinct;
+//    }
+//
+//    public void setDistinct(Object distinct) {
+//        this.distinct = distinct;
+//    }
+//
+//    @Transient
+//    private Object distinct;
+
+    public Integer getMgrid() {
+        return mgrid;
+    }
+
+    public void setMgrid(Integer mgrid) {
+        this.mgrid = mgrid;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public String getRealname() {
+        return realname;
+    }
+
+    public void setRealname(String realname) {
+        this.realname = realname;
+    }
+
+    public String getGroupIds() {
+        return groupIds;
+    }
+
+    public void setGroupIds(String groupIds) {
+        this.groupIds = groupIds;
+    }
+
+    private Integer mgrid;
+    private String logo;
+    private String realname ;
+    private String groupIds;
     private String qq;
     private String email;
     private String tel;

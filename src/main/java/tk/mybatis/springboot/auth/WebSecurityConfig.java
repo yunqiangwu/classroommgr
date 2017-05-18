@@ -9,11 +9,16 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.web.cors.CorsUtils;
 import tk.mybatis.springboot.conf.CaptchaConfig;
 
-import javax.servlet.Filter;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -29,18 +34,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
     @Autowired
     private MyAuthenticationEntryPoint myAuthenticationEntryPoint;
+    @Autowired
+    private MyLogoutSuccessHandler myLogoutSuccessHandler;
+//    @Autowired
+//    private MyCorsFilter myCorsFilter;
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
 
-        http.exceptionHandling().authenticationEntryPoint(myAuthenticationEntryPoint);
+//        http.addFilter(myCorsFilter);
         http.rememberMe().rememberMeParameter("remember").tokenValiditySeconds(9000);
         http
                 .authorizeRequests()
-                .antMatchers("/favicon.ico", "/get-csrf", "/static/**", "/captcha/getcaptcha").permitAll()
+                .antMatchers("/favicon.ico",
+                        "/student**",
+                        "/teacher**",
+                        "/get-csrf",
+                        "/static/**",
+                        "/captcha/getcaptcha").permitAll()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .anyRequest().authenticated()
-                .and()
+                .and().exceptionHandling()
+                .authenticationEntryPoint(myAuthenticationEntryPoint).and()
                 .formLogin()
 //                .loginPage("/login")
                 .successHandler(myAuthenticationSuccessHandler)
@@ -49,6 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout()
+                .logoutSuccessHandler(myLogoutSuccessHandler)
                 .permitAll();
         http.csrf().disable();
     }

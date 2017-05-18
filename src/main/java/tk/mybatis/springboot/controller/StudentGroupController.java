@@ -29,8 +29,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import tk.mybatis.springboot.model.UserInfo;
-import tk.mybatis.springboot.service.UserInfoService;
+import tk.mybatis.springboot.model.StudentGroup;
+import tk.mybatis.springboot.service.StudentGroupService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -40,53 +40,55 @@ import java.util.List;
  * @since 2015-12-19 11:10
  */
 @RestController
-@RequestMapping("/users")
-public class UserInfoController {
+@RequestMapping("/group")
+public class StudentGroupController {
 
     @Autowired
-    private UserInfoService userInfoService;
+    private StudentGroupService studentGroupService;
 
     @RequestMapping
-    public PageInfo<UserInfo> getAll(UserInfo userInfo, HttpServletRequest request) {
+    public PageInfo<StudentGroup> getAll(StudentGroup StudentGroup, HttpServletRequest request) {
 
-        List<UserInfo> userInfoList = userInfoService.getAll(userInfo);
-        return new PageInfo<UserInfo>(userInfoList);
+        List<StudentGroup> StudentGroupList = studentGroupService.getAll(StudentGroup);
+        return new PageInfo<StudentGroup>(StudentGroupList);
     }
 
     @RequestMapping(value = "/add")
-    public UserInfo add() {
-        return new UserInfo();
+    public StudentGroup add() {
+        return new StudentGroup();
     }
 
     @RequestMapping(value = "/view/{id}")
-    public UserInfo view(@PathVariable Integer id) {
+    public StudentGroup view(@PathVariable Integer id) {
         ModelAndView result = new ModelAndView();
-        UserInfo userInfo = userInfoService.getById(id);
-        return userInfo;
+        StudentGroup StudentGroup = studentGroupService.getById(id);
+        return StudentGroup;
     }
 
     @RequestMapping(value = "/delete/{id}")
     public ModelMap delete(@PathVariable Integer id) {
         ModelMap result = new ModelMap();
-        userInfoService.deleteById(id);
+        studentGroupService.deleteById(id);
         result.put("msg", "删除成功!");
         return result;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ModelMap save(UserInfo userInfo) {
+    public ModelMap save(StudentGroup StudentGroup) {
         ModelMap result = new ModelMap();
-        String msg = userInfo.getId() == null ? "新增成功!" : "更新成功!";
-        userInfoService.save(userInfo);
-        result.put("userInfo", userInfo);
+        String msg = StudentGroup.getId() == null ? "新增成功!" : "更新成功!";
+        studentGroupService.save(StudentGroup);
+        result.put("studentGroup", StudentGroup);
+        result.put("success",true);
         result.put("msg", msg);
         return result;
     }
 
+
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
-    public ModelMap submit(@RequestBody List<UserInfo> list) {
+    public ModelMap submit(@RequestBody List<StudentGroup> list) {
         ModelMap result = new ModelMap();
-        int res = userInfoService.submit(list);
+        int res = studentGroupService.submit(list);
         String msg =   "更新成功"+res +"条数据";
         result.put("list", list);
         result.put("msg", msg);

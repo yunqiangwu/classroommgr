@@ -9,7 +9,6 @@ import tk.mybatis.springboot.model.UserInfo;
 import tk.mybatis.springboot.model.UserRole;
 import tk.mybatis.springboot.service.UserInfoService;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,7 @@ import java.util.List;
 /**
  * 用户信息扩展类Service
  */
-@Service("MyUserDetailsImpl")
+@Service()
 public class MyUserDetailsService implements UserDetailsService {
     @Autowired
     private UserInfoService systemUserService;
@@ -40,7 +39,13 @@ public class MyUserDetailsService implements UserDetailsService {
 //                List<UserRole> roles = userRoleService.getRoleByUser(user);
                 List<UserRole> roles = new ArrayList<UserRole>();
                 UserRole role = new UserRole();
-                 role.setRole("USER");
+                if("1".equals(user.getUsername())){
+                    role.setRole("TEACHER");
+                }else if("2".equals(user.getUsername())){
+                    role.setRole("STUDENT");
+                }{
+                    role.setRole("USER");
+                }
                  roles.add(role);
                 return new MyUserDetails(user, roles);
             } catch (Exception e) {

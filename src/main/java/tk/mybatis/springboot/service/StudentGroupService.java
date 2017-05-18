@@ -27,8 +27,8 @@ package tk.mybatis.springboot.service;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tk.mybatis.springboot.mapper.UserInfoMapper;
-import tk.mybatis.springboot.model.UserInfo;
+import tk.mybatis.springboot.mapper.StudentGroupMapper;
+import tk.mybatis.springboot.model.StudentGroup;
 import tk.mybatis.springboot.util.MyMapper;
 
 import java.util.List;
@@ -38,42 +38,42 @@ import java.util.List;
  * @since 2016-01-31 21:42
  */
 @Service
-public class UserInfoService extends  BaseService<UserInfo> {
+public class StudentGroupService  extends BaseService<StudentGroup>{
 
     @Autowired
-    private UserInfoMapper userInfoMapper;
+    private StudentGroupMapper studentGroupMapper;
 
-    public List<UserInfo> getAll(UserInfo userInfo) {
-        if (userInfo.getPage() != null && userInfo.getRows() != null) {
-            PageHelper.startPage(userInfo.getPage(), userInfo.getRows());
+    public List<StudentGroup> getAll(StudentGroup studentGroup) {
+        if (studentGroup.getPage() != null && studentGroup.getRows() != null) {
+            PageHelper.startPage(studentGroup.getPage(), studentGroup.getRows());
         }
-        return userInfoMapper.select(userInfo);
+        return studentGroupMapper.select(studentGroup);
     }
 
-    public UserInfo getById(Integer id) {
-        return userInfoMapper.selectByPrimaryKey(id);
+    public StudentGroup getById(Integer id) {
+        return studentGroupMapper.selectByPrimaryKey(id);
     }
 
     public void deleteById(Integer id) {
-        userInfoMapper.deleteByPrimaryKey(id);
+        studentGroupMapper.deleteByPrimaryKey(id);
     }
 
-    public void save(UserInfo country) {
+    public void save(StudentGroup country) {
         if (country.getId() != null) {
-            userInfoMapper.updateByPrimaryKey(country);
+            studentGroupMapper.updateByPrimaryKey(country);
         } else {
-            userInfoMapper.insert(country);
+            studentGroupMapper.insert(country);
         }
     }
 
-	public UserInfo findByUserNameOne(String username) {
-		UserInfo userInfo = new UserInfo();
-		userInfo.setUsername(username);
-		return userInfoMapper.selectOne(userInfo);
+	public StudentGroup findByNameOne(String name) {
+		StudentGroup StudentGroup = new StudentGroup();
+		StudentGroup.setName(name);
+		return studentGroupMapper.selectOne(StudentGroup);
 	}
 
     @Override
-    MyMapper<UserInfo> getMapper() {
-        return userInfoMapper;
+    MyMapper getMapper() {
+        return studentGroupMapper;
     }
 }

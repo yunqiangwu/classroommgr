@@ -7,8 +7,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user_role")
 public class UserRole  extends BaseEntity  {
-
-
     private String role;
     private Long userId;
     public String getRole() {

@@ -41,6 +41,17 @@ public class BaseEntity {
     @Transient
     private Integer page = 1;
 
+    public String get__status() {
+        return __status;
+    }
+
+    public void set__status(String __status) {
+        this.__status = __status;
+    }
+
+    @Transient
+    private String __status;
+
     @Transient
     private Integer rows = 10;
 
@@ -66,5 +77,10 @@ public class BaseEntity {
 
     public void setRows(Integer rows) {
         this.rows = rows;
+    }
+
+    @Override
+    public String toString() {
+        return com.alibaba.fastjson.JSONObject.toJSONString(this);
     }
 }

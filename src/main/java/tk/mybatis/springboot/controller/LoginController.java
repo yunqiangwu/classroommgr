@@ -1,7 +1,10 @@
 package tk.mybatis.springboot.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,17 +38,43 @@ public class LoginController {
 	@Value("${captcha.enable}") private String captchaIsEnable;
 
 
+	@RequestMapping("/teacher")
+	public ModelAndView teacher(HttpServletRequest request,
+								HttpServletResponse response){
+		ModelAndView result = new ModelAndView("teacher");
+		result.addObject("enableCaptcha",captchaIsEnable);
+        result.addObject("urlParameter", JSONObject.toJSONString(request.getParameterMap()));
+		return result;
+	}
+    @RequestMapping("/student")
+    public ModelAndView student(HttpServletRequest request,
+                                HttpServletResponse response){
+        ModelAndView result = new ModelAndView("student");
+        result.addObject("enableCaptcha",captchaIsEnable);
+        result.addObject("urlParameter", JSONObject.toJSONString(request.getParameterMap()));
+        return result;
+    }
+
 	@RequestMapping("/login")
     public ModelAndView login(HttpServletRequest request,
             HttpServletResponse response) {
-			ModelAndView result = new ModelAndView("login");
+
 		Object ru = request.getSession().getAttribute("ru");
+		SecurityContext context = SecurityContextHolder.getContext();
+
+
+		if(context.getAuthentication().isAuthenticated()&&!context.getAuthentication().getName().equals("anonymousUser")){
+			return new ModelAndView("redirect:/");
+		}
+
 		if(ru == null || "".equals(ru)){
 			ru = "/";
 		}
+		ModelAndView result = new ModelAndView("login");
 		result.addObject("returnUrl", ru);
-			result.addObject("enableCaptcha",captchaIsEnable);
+		result.addObject("enableCaptcha",captchaIsEnable);
 		return result;
+
     }
 //
 //	@RequestMapping(value = "/captcha-image")

@@ -61,7 +61,7 @@ public class CountryController {
 
     @RequestMapping(value = "/add")
     public ModelAndView add() {
-        ModelAndView result = new ModelAndView("view");
+        ModelAndView result = new ModelAndView("countries_view");
         result.addObject("country", new Country());
         return result;
     }
