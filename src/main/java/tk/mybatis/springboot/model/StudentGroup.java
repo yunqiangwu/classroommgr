@@ -20,6 +20,7 @@ public class StudentGroup extends BaseEntity  {
 
     private Integer mgrid;
 
+
     public String getName() {
         return name;
     }

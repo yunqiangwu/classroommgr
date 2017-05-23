@@ -34,9 +34,9 @@ import javax.persistence.*;
  */
 public class BaseEntity {
     @Id
-    @Column(name = "Id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Integer id;
+    protected Long id;
 
     @Transient
     private Integer page = 1;
@@ -55,11 +55,11 @@ public class BaseEntity {
     @Transient
     private Integer rows = 10;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

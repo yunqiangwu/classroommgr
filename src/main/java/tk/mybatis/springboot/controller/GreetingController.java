@@ -1,5 +1,6 @@
 package tk.mybatis.springboot.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Headers;
@@ -27,14 +28,19 @@ public class GreetingController {
     /**
      * 表示服务端可以接收客户端通过主题“/app/hello”发送过来的消息，客户端需要在主题"/topic/hello"上监听并接收服务端发回的消息
      * @param topic
-     * @param headers
+     * @param o
      */
     @MessageMapping("/hello") //"/hello"为WebSocketConfig类中registerStompEndpoints()方法配置的
     @SendTo("/topic/greetings")
-    public void greeting(@Header("atytopic") String topic, @Headers Map<String, Object> headers) {
+    public void greeting(@Header("atytopic") String topic, Object o) {
         System.out.println("connected successfully....");
         System.out.println(topic);
-        System.out.println(headers);
+        System.out.println(JSONObject.toJSON( o.getClass()));
+    }
+
+    @MessageMapping("/ws/**")
+    public void closeAndOpenHandle(Object object){
+        System.out.println(object);
     }
 
     /**

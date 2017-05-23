@@ -27,8 +27,8 @@ package tk.mybatis.springboot.service;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tk.mybatis.springboot.mapper.StudentGroupMapper;
-import tk.mybatis.springboot.model.StudentGroup;
+import tk.mybatis.springboot.mapper.SigninRecordMapper;
+import tk.mybatis.springboot.model.SigninRecord;
 import tk.mybatis.springboot.util.MyMapper;
 
 import java.util.List;
@@ -38,42 +38,42 @@ import java.util.List;
  * @since 2016-01-31 21:42
  */
 @Service
-public class StudentGroupService  extends BaseService<StudentGroup>{
+public class SigninRecordService extends BaseService<SigninRecord>{
 
     @Autowired
-    private StudentGroupMapper studentGroupMapper;
+    private SigninRecordMapper signinRecordMapper;
 
-    public List<StudentGroup> getAll(StudentGroup studentGroup) {
-        if (studentGroup.getPage() != null && studentGroup.getRows() != null) {
-            PageHelper.startPage(studentGroup.getPage(), studentGroup.getRows());
+    public List<SigninRecord> getAll(SigninRecord signinRecord) {
+        if (signinRecord.getPage() != null && signinRecord.getRows() != null) {
+            PageHelper.startPage(signinRecord.getPage(), signinRecord.getRows());
         }
-        return studentGroupMapper.select(studentGroup);
+        return signinRecordMapper.select(signinRecord);
     }
 
-    public StudentGroup getById(Long id) {
-        return studentGroupMapper.selectByPrimaryKey(id);
+    public SigninRecord getById(Integer id) {
+        return signinRecordMapper.selectByPrimaryKey(id);
     }
 
-    public void deleteById(Long id) {
-        studentGroupMapper.deleteByPrimaryKey(id);
+    public void deleteById(Integer id) {
+        signinRecordMapper.deleteByPrimaryKey(id);
     }
 
-    public void save(StudentGroup country) {
+    public void save(SigninRecord country) {
         if (country.getId() != null) {
-            studentGroupMapper.updateByPrimaryKey(country);
+            signinRecordMapper.updateByPrimaryKey(country);
         } else {
-            studentGroupMapper.insert(country);
+            signinRecordMapper.insert(country);
         }
     }
 
-	public StudentGroup findByNameOne(String name) {
-		StudentGroup StudentGroup = new StudentGroup();
-		StudentGroup.setName(name);
-		return studentGroupMapper.selectOne(StudentGroup);
+	public SigninRecord findByNameOne(String name) {
+		SigninRecord SigninRecord = new SigninRecord();
+		SigninRecord.setName(name);
+		return signinRecordMapper.selectOne(SigninRecord);
 	}
 
     @Override
     MyMapper getMapper() {
-        return studentGroupMapper;
+        return signinRecordMapper;
     }
 }

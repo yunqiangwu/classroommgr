@@ -23,9 +23,7 @@ public abstract class BaseService<T extends BaseEntity> {
                     }
                     break;
                 case "add":
-                    if(entity.getId()==null){
-                        retnum +=mapper.insert(entity);
-                    }
+                    retnum +=mapper.insert(entity);
                     break;
                 case "update":
                     if(entity.getId()!=null){
@@ -34,7 +32,6 @@ public abstract class BaseService<T extends BaseEntity> {
                     break;
 
                 default:
-
                     break;
             }
         }

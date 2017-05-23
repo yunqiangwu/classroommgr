@@ -29,8 +29,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import tk.mybatis.springboot.model.StudentGroup;
-import tk.mybatis.springboot.service.StudentGroupService;
+import tk.mybatis.springboot.model.SigninRecord;
+import tk.mybatis.springboot.service.SigninRecordService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -40,45 +40,45 @@ import java.util.List;
  * @since 2015-12-19 11:10
  */
 @RestController
-@RequestMapping("/group")
-public class StudentGroupController {
+@RequestMapping("/signinrecord")
+public class SigninRecordController {
 
     @Autowired
-    private StudentGroupService studentGroupService;
+    private SigninRecordService signinRecordService;
 
     @RequestMapping
-    public PageInfo<StudentGroup> getAll(StudentGroup StudentGroup, HttpServletRequest request) {
+    public PageInfo<SigninRecord> getAll(SigninRecord SigninRecord, HttpServletRequest request) {
 
-        List<StudentGroup> StudentGroupList = studentGroupService.getAll(StudentGroup);
-        return new PageInfo<StudentGroup>(StudentGroupList);
+        List<SigninRecord> SigninRecordList = signinRecordService.getAll(SigninRecord);
+        return new PageInfo<SigninRecord>(SigninRecordList);
     }
 
     @RequestMapping(value = "/add")
-    public StudentGroup add() {
-        return new StudentGroup();
+    public SigninRecord add() {
+        return new SigninRecord();
     }
 
     @RequestMapping(value = "/view/{id}")
-    public StudentGroup view(@PathVariable Integer id) {
+    public SigninRecord view(@PathVariable Integer id) {
         ModelAndView result = new ModelAndView();
-        StudentGroup StudentGroup = studentGroupService.getById(id.longValue());
-        return StudentGroup;
+        SigninRecord SigninRecord = signinRecordService.getById(id);
+        return SigninRecord;
     }
 
     @RequestMapping(value = "/delete/{id}")
     public ModelMap delete(@PathVariable Integer id) {
         ModelMap result = new ModelMap();
-        studentGroupService.deleteById(id.longValue());
+        signinRecordService.deleteById(id);
         result.put("msg", "删除成功!");
         return result;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ModelMap save(StudentGroup StudentGroup) {
+    public ModelMap save(SigninRecord SigninRecord) {
         ModelMap result = new ModelMap();
-        String msg = StudentGroup.getId() == null ? "新增成功!" : "更新成功!";
-        studentGroupService.save(StudentGroup);
-        result.put("studentGroup", StudentGroup);
+        String msg = SigninRecord.getId() == null ? "新增成功!" : "更新成功!";
+        signinRecordService.save(SigninRecord);
+        result.put("signinRecord", SigninRecord);
         result.put("success",true);
         result.put("msg", msg);
         return result;
@@ -86,12 +86,12 @@ public class StudentGroupController {
 
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
-    public ModelMap submit(@RequestBody List<StudentGroup> list) {
+    public ModelMap submit(@RequestBody List<SigninRecord> list) {
         ModelMap result = new ModelMap();
-        int res = studentGroupService.submit(list);
-        String msg =   "更新成功"+res +"条数据";
+        int res = signinRecordService.submit(list);
+        String msg =   "成功更新"+res +"条数据";
         result.put("list", list);
-        result.put("msg", msg);
+        result.put("message", msg);
         result.put("success",true);
         return result;
     }

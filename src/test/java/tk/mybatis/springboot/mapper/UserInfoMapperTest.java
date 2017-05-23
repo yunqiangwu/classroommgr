@@ -96,7 +96,7 @@ public class UserInfoMapperTest {
         UserInfo example = new UserInfo();
         example.setPage(2);
         example.setRows(3);
-        example.setId(1);
+        example.setId(1l);
         List<UserInfo> userInfoList = mapper.select(example);
         for (UserInfo c2 : userInfoList) {
             logger.info(c2.toString());
