@@ -18,7 +18,7 @@ public class MyAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint
 
 
     public MyAuthenticationEntryPoint() {
-        super("/login");
+        super("/teacher");
     }
 
     @Override

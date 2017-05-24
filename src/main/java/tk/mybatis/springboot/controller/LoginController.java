@@ -70,7 +70,7 @@ public class LoginController {
 		if(ru == null || "".equals(ru)){
 			ru = "/";
 		}
-		ModelAndView result = new ModelAndView("login");
+		ModelAndView result = new ModelAndView("teacher");
 		result.addObject("returnUrl", ru);
 		result.addObject("enableCaptcha",captchaIsEnable);
 		return result;

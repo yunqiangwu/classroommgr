@@ -25,6 +25,8 @@
 package tk.mybatis.springboot.controller;
 
 import com.github.pagehelper.PageInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +45,7 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserInfoController {
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private UserInfoService userInfoService;
 
@@ -50,6 +53,7 @@ public class UserInfoController {
     public PageInfo<UserInfo> getAll(UserInfo userInfo, HttpServletRequest request) {
 
         List<UserInfo> userInfoList = userInfoService.getAll(userInfo);
+        logger.debug("\n###############\n\n\nsdfdsf打发手动阀撒撒地方阿斯顿发射点啊顺丰到付阿三撒地方阿三\n###########");
         return new PageInfo<UserInfo>(userInfoList);
     }
 

@@ -38,7 +38,8 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry stompEndpointRegistry) {
         //在网页上可以通过"/applicationName/hello"来和服务器的WebSocket连接
             //.setHandshakeHandler(myHandshakeHandler)
-        stompEndpointRegistry.addEndpoint("/ws").addInterceptors(myHandshakeInterceptor).setAllowedOrigins("*").withSockJS();
+//        addInterceptors(myHandshakeInterceptor).
+        stompEndpointRegistry.addEndpoint("/ws").setAllowedOrigins("*").withSockJS();
     }
 
     /**
@@ -71,11 +72,17 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 //    }
 
     @Bean
+    public MySessionConnectedEvent mySessionConnectedEvent(){
+
+        return new MySessionConnectedEvent();
+    }
+
+    @Bean
     HandshakeInterceptor myHandshakeInterceptor() {
         return new HandshakeInterceptor() {
             @Override
             public boolean beforeHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Map<String, Object> map) throws Exception {
-                System.out.println("\n\n\nbeforeHandshake:\n");
+                System.out.println("\n_________________________________\n\nbeforeHandshake:\n");
                 System.out.println(webSocketHandler);
                 System.out.println(map);
 
@@ -84,7 +91,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
             @Override
             public void afterHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Exception e) {
-                System.out.println("\n\n\nafterHandshake:\n");
+                System.out.println("\n_________________________________\n\nafterHandshake:\n");
                 System.out.println(webSocketHandler);
                 System.out.println(e);
 
