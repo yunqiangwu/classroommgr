@@ -85,18 +85,18 @@ public class UserInfo extends BaseEntity {
         this.realname = realname;
     }
 
-    public String getGroupIds() {
-        return groupIds;
+    public Long getScore() {
+        return score;
     }
 
-    public void setGroupIds(String groupIds) {
-        this.groupIds = groupIds;
+    public void setScore(Long score) {
+        this.score = score;
     }
 
+    private Long score;
     private Integer mgrid;
     private String logo;
     private String realname ;
-    private String groupIds;
     private String qq;
     private String email;
     private String tel;
